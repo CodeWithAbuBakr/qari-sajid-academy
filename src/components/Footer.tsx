@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Facebook, Instagram, Youtube, Phone, Mail, MessageCircle } from "lucide-react";
 import { Logo } from "./Logo";
 
@@ -41,7 +41,7 @@ export function Footer() {
               { to: "/contact", l: "Contact Us" },
             ].map((i) => (
               <li key={i.to}>
-                <Link to={i.to as "/"} className="transition-smooth hover:text-gold">
+                <Link to={i.to} className="transition-smooth hover:text-gold">
                   {i.l}
                 </Link>
               </li>
