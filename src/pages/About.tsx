@@ -1,24 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Heart, Target, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import { SectionHeading } from "@/components/SectionHeading";
 import { CTABanner } from "@/components/CTABanner";
+import { SEO } from "@/lib/seo";
 
-export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About Us — Qari Sajid Quran Academy" },
-      { name: "description", content: "Learn about our mission to provide proper Quran education to children and adults with Tajweed, Salah and Islamic character building." },
-      { property: "og:title", content: "About Us — Qari Sajid Quran Academy" },
-      { property: "og:description", content: "Our mission is to provide proper and effective Quran education to both children and adults." },
-    ],
-  }),
-  component: AboutPage,
-});
-
-function AboutPage() {
+export default function AboutPage() {
   return (
     <>
+      <SEO
+        title="About Us — Qari Sajid Quran Academy"
+        description="Learn about our mission to provide proper Quran education to children and adults with Tajweed, Salah and Islamic character building."
+      />
       <section className="pattern-islamic bg-gradient-hero py-20 md:py-28">
         <div className="container mx-auto px-4 text-center md:px-8">
           <Reveal>

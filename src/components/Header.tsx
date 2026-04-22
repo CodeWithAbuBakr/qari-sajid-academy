@@ -1,19 +1,21 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, GraduationCap } from "lucide-react";
 import { Logo } from "./Logo";
 
 const navItems = [
-  { to: "/" as const, label: "Home" },
-  { to: "/about" as const, label: "About Us" },
-  { to: "/what-we-teach" as const, label: "What We Teach" },
-  { to: "/features" as const, label: "Features" },
-  { to: "/our-teacher" as const, label: "Our Teacher" },
-  { to: "/contact" as const, label: "Contact Us" },
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About Us" },
+  { to: "/what-we-teach", label: "What We Teach" },
+  { to: "/features", label: "Features" },
+  { to: "/our-teacher", label: "Our Teacher" },
+  { to: "/contact", label: "Contact Us" },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-xl">
@@ -27,9 +29,9 @@ export function Header() {
             <Link
               key={item.to}
               to={item.to}
-              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/75 transition-smooth hover:text-primary"
-              activeProps={{ className: "text-primary font-semibold" }}
-              activeOptions={{ exact: item.to === "/" }}
+              className={`rounded-md px-3 py-2 text-sm font-medium transition-smooth hover:text-primary ${
+                isActive(item.to) ? "text-primary font-semibold" : "text-foreground/75"
+              }`}
             >
               {item.label}
             </Link>
@@ -63,9 +65,9 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2.5 text-sm font-medium text-foreground/80 transition-smooth hover:bg-secondary hover:text-primary"
-                activeProps={{ className: "text-primary bg-secondary font-semibold" }}
-                activeOptions={{ exact: item.to === "/" }}
+                className={`rounded-md px-3 py-2.5 text-sm font-medium transition-smooth hover:bg-secondary hover:text-primary ${
+                  isActive(item.to) ? "text-primary bg-secondary font-semibold" : "text-foreground/80"
+                }`}
               >
                 {item.label}
               </Link>

@@ -1,23 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { CheckCircle2, BookOpen, Star } from "lucide-react";
 import teacherImg from "@/assets/teacher-hero.png";
 import { Reveal } from "@/components/Reveal";
 import { CTABanner } from "@/components/CTABanner";
-
-export const Route = createFileRoute("/our-teacher")({
-  head: () => ({
-    meta: [
-      { title: "Our Teacher — Qari Sajid Hussain Sialvi" },
-      { name: "description", content: "Meet Qari Sajid Hussain Sialvi — passionate Quran educator specializing in Tajweed, Tafseer, and Islamic character building." },
-      { property: "og:title", content: "Our Teacher — Qari Sajid Hussain Sialvi" },
-      { property: "og:description", content: "Passionate Quran teacher dedicated to Tajweed, understanding, and character building." },
-      { property: "og:image", content: teacherImg },
-      { name: "twitter:image", content: teacherImg },
-    ],
-  }),
-  component: TeacherPage,
-});
+import { SEO } from "@/lib/seo";
 
 const teaches = [
   "Quran Nazra with Tajweed",
@@ -34,9 +20,14 @@ const approach = [
   "Regular assessments & feedback",
 ];
 
-function TeacherPage() {
+export default function OurTeacherPage() {
   return (
     <>
+      <SEO
+        title="Our Teacher — Qari Sajid Hussain Sialvi"
+        description="Meet Qari Sajid Hussain Sialvi — passionate Quran educator specializing in Tajweed, Tafseer, and Islamic character building."
+        ogImage={teacherImg}
+      />
       <section className="pattern-islamic relative overflow-hidden bg-gradient-hero">
         <div className="container mx-auto grid items-center gap-12 px-4 py-16 md:px-8 md:py-24 lg:grid-cols-5">
           <Reveal className="lg:col-span-2">

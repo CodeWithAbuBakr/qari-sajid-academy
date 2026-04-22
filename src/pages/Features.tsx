@@ -1,19 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Users, Sparkles, Globe, UserCheck, Clock, ShieldCheck } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { CTABanner } from "@/components/CTABanner";
-
-export const Route = createFileRoute("/features")({
-  head: () => ({
-    meta: [
-      { title: "Features — Qari Sajid Quran Academy" },
-      { name: "description", content: "Online Quran classes for kids and adults with simple methods, personal attention, flexible timings and authentic teaching." },
-      { property: "og:title", content: "Features — Qari Sajid Quran Academy" },
-      { property: "og:description", content: "Why parents and students choose our online Quran academy." },
-    ],
-  }),
-  component: FeaturesPage,
-});
+import { SEO } from "@/lib/seo";
 
 const features = [
   { icon: Users, title: "Classes for Kids & Adults", text: "Customized lesson plans suited for every age and learning level." },
@@ -24,9 +12,13 @@ const features = [
   { icon: ShieldCheck, title: "Trusted & Authentic", text: "Authentic Tajweed, sincere intentions, and a respectful environment." },
 ];
 
-function FeaturesPage() {
+export default function FeaturesPage() {
   return (
     <>
+      <SEO
+        title="Features — Qari Sajid Quran Academy"
+        description="Online Quran classes for kids and adults with simple methods, personal attention, flexible timings and authentic teaching."
+      />
       <section className="pattern-islamic bg-gradient-hero py-20 md:py-24">
         <div className="container mx-auto px-4 text-center md:px-8">
           <Reveal>

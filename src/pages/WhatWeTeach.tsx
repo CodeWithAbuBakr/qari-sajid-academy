@@ -1,20 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { BookOpenCheck, Sparkles, HeartHandshake, Award, Users, CheckCircle2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { CTABanner } from "@/components/CTABanner";
-
-export const Route = createFileRoute("/what-we-teach")({
-  head: () => ({
-    meta: [
-      { title: "What We Teach — Qari Sajid Quran Academy" },
-      { name: "description", content: "Quran reading with Tajweed, Daily Duas, Salah training, Islamic manners and complete lifestyle guidance for children and adults." },
-      { property: "og:title", content: "What We Teach — Qari Sajid Quran Academy" },
-      { property: "og:description", content: "A structured Quran curriculum: Tajweed, Duas, Salah, manners, and Islamic lifestyle guidance." },
-    ],
-  }),
-  component: TeachPage,
-});
+import { SEO } from "@/lib/seo";
 
 const items = [
   { icon: BookOpenCheck, title: "Quran reading with Tajweed", text: "Children and adults are taught to read the Holy Quran with proper pronunciation and Tajweed rules." },
@@ -24,9 +12,13 @@ const items = [
   { icon: Users, title: "Islamic lifestyle guidance", text: "Comprehensive guidance for children to live a balanced and meaningful Islamic life." },
 ];
 
-function TeachPage() {
+export default function WhatWeTeachPage() {
   return (
     <>
+      <SEO
+        title="What We Teach — Qari Sajid Quran Academy"
+        description="Quran reading with Tajweed, Daily Duas, Salah training, Islamic manners and complete lifestyle guidance for children and adults."
+      />
       <section className="pattern-islamic bg-gradient-hero py-20 md:py-24">
         <div className="container mx-auto px-4 text-center md:px-8">
           <Reveal>
