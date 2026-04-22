@@ -1,28 +1,63 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MessageCircle, MapPin, Send } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { useState } from "react";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact Us — Qari Sajid Quran Academy" },
-      { name: "description", content: "Contact Qari Sajid Quran Academy in Lahore. Call, WhatsApp or email us to enroll in online Quran classes." },
-      { property: "og:title", content: "Contact Us — Qari Sajid Quran Academy" },
-      { property: "og:description", content: "Get in touch to enroll in online Quran classes for kids and adults." },
-    ],
-  }),
   component: ContactPage,
 });
 
 const contacts = [
-  { icon: Phone, label: "Call Us", value: "+92 346 8654186", href: "tel:+923468654186", color: "primary" as const },
-  { icon: MessageCircle, label: "WhatsApp", value: "+92 307 8654186", href: "https://wa.me/923078654186", color: "gold" as const, target: "_blank" },
-  { icon: Mail, label: "Email", value: "jeesajid029@gmail.com", href: "mailto:jeesajid029@gmail.com", color: "primary" as const },
+  { icon: Phone, label: "Call Us", value: "+92 307 8654186", href: "tel:+923078654186", color: "primary" },
+  { icon: MessageCircle, label: "WhatsApp", value: "+92 346 8654186", href: "https://wa.me/923468654186", color: "gold", target: "_blank" },
+  { icon: Mail, label: "Email", value: "jeesajid029@gmail.com", href: "mailto:jeesajid029@gmail.com", color: "primary" },
 ];
 
 function ContactPage() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
+
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbw0fEZzb5r4upOaTnNo6BNBgIjIlQMT8xd-a3fmrWtwaaTo_G1kGM8QjgKBZG2vYmnKUQ/exec", {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+
+      setSuccess(true);
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
+      {/* HERO */}
       <section className="pattern-islamic bg-gradient-hero py-20 md:py-24">
         <div className="container mx-auto px-4 text-center md:px-8">
           <Reveal>
@@ -39,6 +74,7 @@ function ContactPage() {
         </div>
       </section>
 
+      {/* CONTACT CARDS */}
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid gap-5 md:grid-cols-3">
@@ -48,18 +84,17 @@ function ContactPage() {
                   href={c.href}
                   target={c.target}
                   rel={c.target ? "noreferrer" : undefined}
-                  className="group flex h-full items-center gap-4 rounded-2xl border border-border bg-card p-6 shadow-soft transition-smooth hover:-translate-y-1 hover:border-gold/40 hover:shadow-card"
+                  className="group flex h-full items-center gap-4 rounded-2xl border border-border bg-card p-6 shadow-soft transition hover:-translate-y-1 hover:border-gold/40"
                 >
                   <span
-                    className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl text-primary-foreground shadow-soft transition-smooth group-hover:scale-110 ${
-                      c.color === "gold" ? "bg-gradient-gold" : "bg-gradient-primary"
-                    }`}
+                    className={`flex h-14 w-14 items-center justify-center rounded-2xl text-white ${c.color === "gold" ? "bg-yellow-500" : "bg-green-600"
+                      }`}
                   >
                     <c.icon className="h-6 w-6" />
                   </span>
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{c.label}</div>
-                    <div className="mt-1 font-semibold text-primary">{c.value}</div>
+                    <div className="text-xs text-muted-foreground">{c.label}</div>
+                    <div className="font-semibold text-primary">{c.value}</div>
                   </div>
                 </a>
               </Reveal>
@@ -68,79 +103,89 @@ function ContactPage() {
         </div>
       </section>
 
+      {/* FORM + MAP */}
       <section className="pb-20">
         <div className="container mx-auto grid gap-8 px-4 md:px-8 lg:grid-cols-2">
-          {/* Form */}
+
+          {/* FORM */}
           <Reveal>
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit}
               className="rounded-2xl border border-border bg-card p-7 shadow-soft md:p-9"
             >
-              <h3 className="font-display text-2xl font-bold text-primary">Send a Message</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Fill the form and we'll get back to you soon, in shaa Allah.
-              </p>
+              <h3 className="text-2xl font-bold text-primary">Send a Message</h3>
+
               <div className="mt-6 grid gap-4">
-                <div>
-                  <label className="text-xs font-semibold text-foreground">Your Name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter your name"
-                    className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-smooth focus:border-primary focus:ring-2 focus:ring-ring/30"
-                  />
-                </div>
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Your Name"
+                  required
+                  className="w-full rounded-xl border px-4 py-3"
+                />
+
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="text-xs font-semibold text-foreground">Email</label>
-                    <input
-                      type="email"
-                      placeholder="you@example.com"
-                      className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-smooth focus:border-primary focus:ring-2 focus:ring-ring/30"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs font-semibold text-foreground">Phone</label>
-                    <input
-                      type="tel"
-                      placeholder="+92 ..."
-                      className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-smooth focus:border-primary focus:ring-2 focus:ring-ring/30"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-foreground">Message</label>
-                  <textarea
-                    rows={5}
-                    placeholder="Tell us how we can help..."
-                    className="mt-1.5 w-full resize-none rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-smooth focus:border-primary focus:ring-2 focus:ring-ring/30"
+                  <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    required
+                    className="w-full rounded-xl border px-4 py-3"
+                  />
+
+                  <input
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    placeholder="Phone"
+                    required
+                    className="w-full rounded-xl border px-4 py-3"
                   />
                 </div>
+
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  placeholder="Message"
+                  rows={5}
+                  required
+                  className="w-full rounded-xl border px-4 py-3"
+                />
+
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-semibold text-primary-foreground shadow-soft transition-smooth hover:-translate-y-0.5 hover:shadow-elegant"
+                  disabled={loading}
+                  className="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3 text-white"
                 >
-                  <Send className="h-4 w-4" /> Send Message
+                  <Send className="h-4 w-4" />
+                  {loading ? "Sending..." : "Send Message"}
                 </button>
+
+                {success && (
+                  <p className="text-green-600 text-sm mt-2">
+                    ✅ Message sent successfully!
+                  </p>
+                )}
               </div>
             </form>
           </Reveal>
 
-          {/* Map */}
-          <Reveal delay={0.1}>
-            <div className="h-full overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-              <div className="flex items-center gap-2 border-b border-border bg-secondary/60 px-5 py-4">
-                <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-sm font-semibold text-primary">Our Location — Lahore, Pakistan</span>
-              </div>
+          {/* MAP */}
+          <Reveal>
+            <div className="overflow-hidden rounded-2xl border shadow-soft">
               <iframe
                 title="Lahore Location"
                 src="https://www.google.com/maps?q=Lahore,Pakistan&output=embed"
                 className="h-[420px] w-full border-0"
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
           </Reveal>
+
         </div>
       </section>
     </>

@@ -64,13 +64,13 @@ export function Footer() {
           <h4 className="font-display text-lg font-semibold text-gold">Contact Us</h4>
           <ul className="mt-4 space-y-3 text-sm text-white/80">
             <li>
-              <a href="tel:+923468654186" className="flex items-center gap-2 hover:text-gold transition-smooth">
-                <Phone className="h-4 w-4 text-gold" /> +92 346 8654186
+              <a href="tel:+923078654186" className="flex items-center gap-2 hover:text-gold transition-smooth">
+                <Phone className="h-4 w-4 text-gold" /> +92 307 8654186
               </a>
             </li>
             <li>
-              <a href="https://wa.me/923078654186" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold transition-smooth">
-                <MessageCircle className="h-4 w-4 text-gold" /> +92 307 8654186
+              <a href="https://wa.me/923468654186" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold transition-smooth">
+                <MessageCircle className="h-4 w-4 text-gold" /> +92 346 8654186
               </a>
             </li>
             <li>
